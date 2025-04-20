@@ -1,0 +1,430 @@
+include Makefile.inc
+
+./acbl89.intfb.ok: $(SRC)/./acbl89.intfb.h parkind1.o yomhook.o yomcst.o yomphy.o yomphy0.o
+	touch ./acbl89.intfb.ok
+
+./acbl89_openacc.intfb.ok: $(SRC)/./acbl89_openacc.intfb.h parkind1.o yomcst.o yomphy.o yomphy0.o abor1_acc_mod.o stack_mod.o
+	touch ./acbl89_openacc.intfb.ok
+
+./acevolet.intfb.ok: $(SRC)/./acevolet.intfb.h model_physics_mf_mod.o parkind1.o yomhook.o yomcst.o
+	touch ./acevolet.intfb.ok
+
+./acevolet_openacc.intfb.ok: $(SRC)/./acevolet_openacc.intfb.h model_physics_mf_mod.o parkind1.o yomcst.o abor1_acc_mod.o stack_mod.o
+	touch ./acevolet_openacc.intfb.ok
+
+./aclender.intfb.ok: $(SRC)/./aclender.intfb.h parkind1.o yomhook.o yomcst.o yomphy.o yomphy0.o
+	touch ./aclender.intfb.ok
+
+./aclender_openacc.intfb.ok: $(SRC)/./aclender_openacc.intfb.h parkind1.o yomcst.o yomphy.o yomphy0.o abor1_acc_mod.o stack_mod.o
+	touch ./aclender_openacc.intfb.ok
+
+./actke.intfb.ok: $(SRC)/./actke.intfb.h model_physics_mf_mod.o yommddh.o parkind1.o yomhook.o yomcst.o yomlddh.o
+	touch ./actke.intfb.ok
+
+./actke_openacc.intfb.ok: $(SRC)/./actke_openacc.intfb.h model_physics_mf_mod.o yommddh.o parkind1.o yomcst.o yomlddh.o abor1_acc_mod.o stack_mod.o
+	touch ./actke_openacc.intfb.ok
+
+./acturb.intfb.ok: $(SRC)/./acturb.intfb.h parkind1.o yomhook.o yomcst.o yomphy0.o yomphy.o
+	touch ./acturb.intfb.ok
+
+./acturb_openacc.intfb.ok: $(SRC)/./acturb_openacc.intfb.h parkind1.o yomcst.o yomphy0.o yomphy.o abor1_acc_mod.o stack_mod.o
+	touch ./acturb_openacc.intfb.ok
+
+./fl2hl.intfb.ok: $(SRC)/./fl2hl.intfb.h parkind1.o yomhook.o
+	touch ./fl2hl.intfb.ok
+
+./fl2hl_openacc.intfb.ok: $(SRC)/./fl2hl_openacc.intfb.h parkind1.o abor1_acc_mod.o stack_mod.o
+	touch ./fl2hl_openacc.intfb.ok
+
+./hl2fl.intfb.ok: $(SRC)/./hl2fl.intfb.h parkind1.o yomhook.o
+	touch ./hl2fl.intfb.ok
+
+./hl2fl_openacc.intfb.ok: $(SRC)/./hl2fl_openacc.intfb.h parkind1.o abor1_acc_mod.o stack_mod.o
+	touch ./hl2fl_openacc.intfb.ok
+
+fcttrm.func.ok: $(SRC)/fcttrm.func.h
+	touch fcttrm.func.ok
+stack.ok: $(SRC)/stack.h
+	touch stack.ok
+abor1_acc_mod.o: $(SRC)/abor1_acc_mod.F90 
+	$(FC) -c $(SRC)/abor1_acc_mod.F90
+
+acbl89.o: $(SRC)/acbl89.F90 parkind1.o yomhook.o yomcst.o yomphy.o yomphy0.o
+	$(FC) -c $(SRC)/acbl89.F90
+
+acbl89_openacc.o: $(SRC)/acbl89_openacc.F90 parkind1.o yomcst.o yomphy.o yomphy0.o abor1_acc_mod.o stack_mod.o stack.ok
+	$(FC) -c $(SRC)/acbl89_openacc.F90
+
+acevolet.o: $(SRC)/acevolet.F90 model_physics_mf_mod.o parkind1.o yomhook.o yomcst.o
+	$(FC) -c $(SRC)/acevolet.F90
+
+acevolet_openacc.o: $(SRC)/acevolet_openacc.F90 model_physics_mf_mod.o parkind1.o yomcst.o abor1_acc_mod.o stack_mod.o stack.ok
+	$(FC) -c $(SRC)/acevolet_openacc.F90
+
+aclender.o: $(SRC)/aclender.F90 parkind1.o yomhook.o yomcst.o yomphy.o yomphy0.o fcttrm.func.ok
+	$(FC) -c $(SRC)/aclender.F90
+
+aclender_openacc.o: $(SRC)/aclender_openacc.F90 parkind1.o yomcst.o yomphy.o yomphy0.o abor1_acc_mod.o stack_mod.o stack.ok fcttrm.func.ok
+	$(FC) -c $(SRC)/aclender_openacc.F90
+
+actke.o: $(SRC)/actke.F90 model_physics_mf_mod.o yommddh.o parkind1.o yomhook.o yomcst.o yomlddh.o acbl89.intfb.ok acturb.intfb.ok acevolet.intfb.ok hl2fl.intfb.ok fl2hl.intfb.ok aclender.intfb.ok
+	$(FC) -c $(SRC)/actke.F90
+
+actke_openacc.o: $(SRC)/actke_openacc.F90 model_physics_mf_mod.o yommddh.o parkind1.o yomcst.o yomlddh.o abor1_acc_mod.o stack_mod.o stack.ok acbl89_openacc.intfb.ok acturb_openacc.intfb.ok acevolet_openacc.intfb.ok hl2fl_openacc.intfb.ok fl2hl_openacc.intfb.ok aclender_openacc.intfb.ok
+	$(FC) -c $(SRC)/actke_openacc.F90
+
+acturb.o: $(SRC)/acturb.F90 parkind1.o yomhook.o yomcst.o yomphy0.o yomphy.o fcttrm.func.ok
+	$(FC) -c $(SRC)/acturb.F90
+
+acturb_openacc.o: $(SRC)/acturb_openacc.F90 parkind1.o yomcst.o yomphy0.o yomphy.o abor1_acc_mod.o stack_mod.o stack.ok fcttrm.func.ok
+	$(FC) -c $(SRC)/acturb_openacc.F90
+
+crc64_intrinsic.o: $(SRC)/crc64_intrinsic.F90 parkind1.o
+	$(FC) -c $(SRC)/crc64_intrinsic.F90
+
+eint_mod.o: $(SRC)/eint_mod.F90 parkind1.o
+	$(FC) -c $(SRC)/eint_mod.F90
+
+fl2hl.o: $(SRC)/fl2hl.F90 parkind1.o yomhook.o
+	$(FC) -c $(SRC)/fl2hl.F90
+
+fl2hl_openacc.o: $(SRC)/fl2hl_openacc.F90 parkind1.o abor1_acc_mod.o stack_mod.o stack.ok
+	$(FC) -c $(SRC)/fl2hl_openacc.F90
+
+hl2fl.o: $(SRC)/hl2fl.F90 parkind1.o yomhook.o
+	$(FC) -c $(SRC)/hl2fl.F90
+
+hl2fl_openacc.o: $(SRC)/hl2fl_openacc.F90 parkind1.o abor1_acc_mod.o stack_mod.o stack.ok
+	$(FC) -c $(SRC)/hl2fl_openacc.F90
+
+main_actke.o: $(SRC)/main_actke.F90 yomdata.o util_model_physics_mf_type_mod.o util_tcst_mod.o util_tlddh_mod.o util_tmddh_mod.o model_physics_mf_mod.o yommddh.o parkind1.o yomcst.o yomlddh.o xrd_getoptions.o xrd_unix_env.o yomhook.o stack_mod.o stack.ok actke.intfb.ok actke_openacc.intfb.ok
+	$(FC) -c $(SRC)/main_actke.F90
+
+modd_budget.o: $(SRC)/modd_budget.F90 
+	$(FC) -c $(SRC)/modd_budget.F90
+
+modd_cloudparn.o: $(SRC)/modd_cloudparn.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_cloudparn.F90
+
+modd_convpar.o: $(SRC)/modd_convpar.F90 yomhook.o
+	$(FC) -c $(SRC)/modd_convpar.F90
+
+modd_convpar_shal.o: $(SRC)/modd_convpar_shal.F90 
+	$(FC) -c $(SRC)/modd_convpar_shal.F90
+
+modd_convparext.o: $(SRC)/modd_convparext.F90 
+	$(FC) -c $(SRC)/modd_convparext.F90
+
+modd_cst.o: $(SRC)/modd_cst.F90 
+	$(FC) -c $(SRC)/modd_cst.F90
+
+modd_cturb.o: $(SRC)/modd_cturb.F90 
+	$(FC) -c $(SRC)/modd_cturb.F90
+
+modd_field.o: $(SRC)/modd_field.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_field.F90
+
+modd_misc.o: $(SRC)/modd_misc.F90 modd_budget.o
+	$(FC) -c $(SRC)/modd_misc.F90
+
+modd_nebn.o: $(SRC)/modd_nebn.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_nebn.F90
+
+modd_nsv.o: $(SRC)/modd_nsv.F90 modd_field.o modd_parameters.o
+	$(FC) -c $(SRC)/modd_nsv.F90
+
+modd_param_icen.o: $(SRC)/modd_param_icen.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_param_icen.F90
+
+modd_param_lima.o: $(SRC)/modd_param_lima.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_param_lima.F90
+
+modd_param_lima_cold.o: $(SRC)/modd_param_lima_cold.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_param_lima_cold.F90
+
+modd_param_lima_mixed.o: $(SRC)/modd_param_lima_mixed.F90 
+	$(FC) -c $(SRC)/modd_param_lima_mixed.F90
+
+modd_param_lima_warm.o: $(SRC)/modd_param_lima_warm.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_param_lima_warm.F90
+
+modd_param_mfshalln.o: $(SRC)/modd_param_mfshalln.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_param_mfshalln.F90
+
+modd_parameters.o: $(SRC)/modd_parameters.F90 
+	$(FC) -c $(SRC)/modd_parameters.F90
+
+modd_phyex.o: $(SRC)/modd_phyex.F90 modd_cst.o modd_param_icen.o modd_rain_ice_descrn.o modd_rain_ice_paramn.o modd_cloudparn.o modd_param_mfshalln.o modd_turbn.o modd_cturb.o modd_nebn.o modd_param_lima.o modd_param_lima_warm.o modd_param_lima_cold.o modd_param_lima_mixed.o modd_nsv.o modd_misc.o
+	$(FC) -c $(SRC)/modd_phyex.F90
+
+modd_rain_ice_descrn.o: $(SRC)/modd_rain_ice_descrn.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_rain_ice_descrn.F90
+
+modd_rain_ice_paramn.o: $(SRC)/modd_rain_ice_paramn.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_rain_ice_paramn.F90
+
+modd_turbn.o: $(SRC)/modd_turbn.F90 modd_parameters.o
+	$(FC) -c $(SRC)/modd_turbn.F90
+
+model_physics_mf_mod.o: $(SRC)/model_physics_mf_mod.F90 yomphy.o yomphy0.o yomphy1.o yomphy2.o yomphy3.o yomphyds.o yomcvmnh.o yomtoph.o yomvdoz.o yomsimphl.o yomarphy.o yomparar.o yommse.o yomlouis.o yomnorgwd.o yomnrtaer.o yoaiop.o eint_mod.o yomdgradient.o parkind1.o
+	$(FC) -c $(SRC)/model_physics_mf_mod.F90
+
+parkind1.o: $(SRC)/parkind1.F90 
+	$(FC) -c $(SRC)/parkind1.F90
+
+stack_mod.o: $(SRC)/stack_mod.F90 parkind1.o
+	$(FC) -c $(SRC)/stack_mod.F90
+
+util_cloudpar_t_mod.o: $(SRC)/util_cloudpar_t_mod.F90 modd_cloudparn.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_cloudpar_t_mod.F90
+
+util_convpar_shal_mod.o: $(SRC)/util_convpar_shal_mod.F90 modd_convpar_shal.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_convpar_shal_mod.F90
+
+util_convpar_t_mod.o: $(SRC)/util_convpar_t_mod.F90 modd_convpar.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_convpar_t_mod.F90
+
+util_convparext_mod.o: $(SRC)/util_convparext_mod.F90 modd_convparext.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_convparext_mod.F90
+
+util_cst_t_mod.o: $(SRC)/util_cst_t_mod.F90 modd_cst.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_cst_t_mod.F90
+
+util_csturb_t_mod.o: $(SRC)/util_csturb_t_mod.F90 modd_cturb.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_csturb_t_mod.F90
+
+util_misc_t_mod.o: $(SRC)/util_misc_t_mod.F90 modd_misc.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_misc_t_mod.F90
+
+util_model_physics_mf_type_mod.o: $(SRC)/util_model_physics_mf_type_mod.F90 model_physics_mf_mod.o util_sl_struct_mod.o util_taiop_mod.o util_tarphy_mod.o util_tcvmnh_mod.o util_tgradient_mod.o util_tlouis_mod.o util_tmse_mod.o util_tnorgwd_mod.o util_tnrtaer_mod.o util_tparar_mod.o util_tphy0_mod.o util_tphy1_mod.o util_tphy2_mod.o util_tphy3_mod.o util_tphyds_mod.o util_tphy_mod.o util_tsimphl_mod.o util_ttoph_mod.o util_tvdoz_mod.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_model_physics_mf_type_mod.F90
+
+util_neb_t_mod.o: $(SRC)/util_neb_t_mod.F90 modd_nebn.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_neb_t_mod.F90
+
+util_nsv_t_mod.o: $(SRC)/util_nsv_t_mod.F90 modd_nsv.o util_tfieldmetadata_mod.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_nsv_t_mod.F90
+
+util_param_ice_t_mod.o: $(SRC)/util_param_ice_t_mod.F90 modd_param_icen.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_param_ice_t_mod.F90
+
+util_param_lima_cold_t_mod.o: $(SRC)/util_param_lima_cold_t_mod.F90 modd_param_lima_cold.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_param_lima_cold_t_mod.F90
+
+util_param_lima_mixed_t_mod.o: $(SRC)/util_param_lima_mixed_t_mod.F90 modd_param_lima_mixed.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_param_lima_mixed_t_mod.F90
+
+util_param_lima_t_mod.o: $(SRC)/util_param_lima_t_mod.F90 modd_param_lima.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_param_lima_t_mod.F90
+
+util_param_lima_warm_t_mod.o: $(SRC)/util_param_lima_warm_t_mod.F90 modd_param_lima_warm.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_param_lima_warm_t_mod.F90
+
+util_param_mfshall_t_mod.o: $(SRC)/util_param_mfshall_t_mod.F90 modd_param_mfshalln.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_param_mfshall_t_mod.F90
+
+util_phyex_t_mod.o: $(SRC)/util_phyex_t_mod.F90 modd_phyex.o util_cloudpar_t_mod.o util_csturb_t_mod.o util_cst_t_mod.o util_misc_t_mod.o util_neb_t_mod.o util_nsv_t_mod.o util_param_ice_t_mod.o util_param_lima_cold_t_mod.o util_param_lima_mixed_t_mod.o util_param_lima_warm_t_mod.o util_param_lima_t_mod.o util_param_mfshall_t_mod.o util_rain_ice_descr_t_mod.o util_rain_ice_param_t_mod.o util_turb_t_mod.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_phyex_t_mod.F90
+
+util_rain_ice_descr_t_mod.o: $(SRC)/util_rain_ice_descr_t_mod.F90 modd_rain_ice_descrn.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_rain_ice_descr_t_mod.F90
+
+util_rain_ice_param_t_mod.o: $(SRC)/util_rain_ice_param_t_mod.F90 modd_rain_ice_paramn.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_rain_ice_param_t_mod.F90
+
+util_sl_struct_mod.o: $(SRC)/util_sl_struct_mod.F90 eint_mod.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_sl_struct_mod.F90
+
+util_tadvprs_mod.o: $(SRC)/util_tadvprs_mod.F90 yomphy0.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tadvprs_mod.F90
+
+util_taiop_mod.o: $(SRC)/util_taiop_mod.F90 yoaiop.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_taiop_mod.F90
+
+util_tarphy_mod.o: $(SRC)/util_tarphy_mod.F90 yomarphy.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tarphy_mod.F90
+
+util_tcape_mod.o: $(SRC)/util_tcape_mod.F90 yomcape.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tcape_mod.F90
+
+util_tcst_mod.o: $(SRC)/util_tcst_mod.F90 yomcst.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tcst_mod.F90
+
+util_tcvmnh_mod.o: $(SRC)/util_tcvmnh_mod.F90 yomcvmnh.o util_convparext_mod.o util_convpar_shal_mod.o util_convpar_t_mod.o util_cst_t_mod.o util_nsv_t_mod.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tcvmnh_mod.F90
+
+util_tdprecips_mod.o: $(SRC)/util_tdprecips_mod.F90 yomdprecips.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tdprecips_mod.F90
+
+util_tdvisi_mod.o: $(SRC)/util_tdvisi_mod.F90 yomdvisi.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tdvisi_mod.F90
+
+util_tdwet_mod.o: $(SRC)/util_tdwet_mod.F90 yomdwet.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tdwet_mod.F90
+
+util_tfieldmetadata_mod.o: $(SRC)/util_tfieldmetadata_mod.F90 modd_field.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tfieldmetadata_mod.F90
+
+util_tgradient_mod.o: $(SRC)/util_tgradient_mod.F90 yomdgradient.o util_tgradient_ptr_mod.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tgradient_mod.F90
+
+util_tgradient_ptr_mod.o: $(SRC)/util_tgradient_ptr_mod.F90 yomdgradient.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tgradient_ptr_mod.F90
+
+util_tlddh_mod.o: $(SRC)/util_tlddh_mod.F90 yomlddh.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tlddh_mod.F90
+
+util_tlouis_mod.o: $(SRC)/util_tlouis_mod.F90 yomlouis.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tlouis_mod.F90
+
+util_tmddh_mod.o: $(SRC)/util_tmddh_mod.F90 yommddh.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tmddh_mod.F90
+
+util_tmse_mod.o: $(SRC)/util_tmse_mod.F90 yommse.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tmse_mod.F90
+
+util_tnorgwd_mod.o: $(SRC)/util_tnorgwd_mod.F90 yomnorgwd.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tnorgwd_mod.F90
+
+util_tnrtaer_mod.o: $(SRC)/util_tnrtaer_mod.F90 yomnrtaer.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tnrtaer_mod.F90
+
+util_tparar_mod.o: $(SRC)/util_tparar_mod.F90 yomparar.o util_phyex_t_mod.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tparar_mod.F90
+
+util_tphy0_mod.o: $(SRC)/util_tphy0_mod.F90 yomphy0.o util_tadvprs_mod.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tphy0_mod.F90
+
+util_tphy1_mod.o: $(SRC)/util_tphy1_mod.F90 yomphy1.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tphy1_mod.F90
+
+util_tphy2_mod.o: $(SRC)/util_tphy2_mod.F90 yomphy2.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tphy2_mod.F90
+
+util_tphy3_mod.o: $(SRC)/util_tphy3_mod.F90 yomphy3.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tphy3_mod.F90
+
+util_tphy_mod.o: $(SRC)/util_tphy_mod.F90 yomphy.o util_tcape_mod.o util_tdprecips_mod.o util_tdvisi_mod.o util_tdwet_mod.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tphy_mod.F90
+
+util_tphyds_mod.o: $(SRC)/util_tphyds_mod.F90 yomphyds.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tphyds_mod.F90
+
+util_tsimphl_mod.o: $(SRC)/util_tsimphl_mod.F90 yomsimphl.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tsimphl_mod.F90
+
+util_ttoph_mod.o: $(SRC)/util_ttoph_mod.F90 yomtoph.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_ttoph_mod.F90
+
+util_turb_t_mod.o: $(SRC)/util_turb_t_mod.F90 modd_turbn.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_turb_t_mod.F90
+
+util_tvdoz_mod.o: $(SRC)/util_tvdoz_mod.F90 yomvdoz.o parkind1.o crc64_intrinsic.o
+	$(FC) -c $(SRC)/util_tvdoz_mod.F90
+
+xrd_getoptions.o: $(SRC)/xrd_getoptions.F90 parkind1.o xrd_unix_env.o
+	$(FC) -c $(SRC)/xrd_getoptions.F90
+
+xrd_unix_env.o: $(SRC)/xrd_unix_env.F90 parkind1.o
+	$(FC) -c $(SRC)/xrd_unix_env.F90
+
+yoaiop.o: $(SRC)/yoaiop.F90 parkind1.o
+	$(FC) -c $(SRC)/yoaiop.F90
+
+yomarphy.o: $(SRC)/yomarphy.F90 parkind1.o
+	$(FC) -c $(SRC)/yomarphy.F90
+
+yomcape.o: $(SRC)/yomcape.F90 parkind1.o
+	$(FC) -c $(SRC)/yomcape.F90
+
+yomcst.o: $(SRC)/yomcst.F90 parkind1.o
+	$(FC) -c $(SRC)/yomcst.F90
+
+yomct0.o: $(SRC)/yomct0.F90 parkind1.o
+	$(FC) -c $(SRC)/yomct0.F90
+
+yomcvmnh.o: $(SRC)/yomcvmnh.F90 parkind1.o modd_nsv.o modd_convpar.o modd_cst.o modd_convparext.o modd_convpar_shal.o
+	$(FC) -c $(SRC)/yomcvmnh.F90
+
+yomdata.o: $(SRC)/yomdata.F90 parkind1.o
+	$(FC) -c $(SRC)/yomdata.F90
+
+yomdgradient.o: $(SRC)/yomdgradient.F90 yomhook.o
+	$(FC) -c $(SRC)/yomdgradient.F90
+
+yomdprecips.o: $(SRC)/yomdprecips.F90 parkind1.o
+	$(FC) -c $(SRC)/yomdprecips.F90
+
+yomdvisi.o: $(SRC)/yomdvisi.F90 parkind1.o
+	$(FC) -c $(SRC)/yomdvisi.F90
+
+yomdwet.o: $(SRC)/yomdwet.F90 parkind1.o
+	$(FC) -c $(SRC)/yomdwet.F90
+
+yomhook.o: $(SRC)/yomhook.F90 parkind1.o
+	$(FC) -c $(SRC)/yomhook.F90
+
+yomlddh.o: $(SRC)/yomlddh.F90 
+	$(FC) -c $(SRC)/yomlddh.F90
+
+yomlouis.o: $(SRC)/yomlouis.F90 parkind1.o
+	$(FC) -c $(SRC)/yomlouis.F90
+
+yommddh.o: $(SRC)/yommddh.F90 parkind1.o
+	$(FC) -c $(SRC)/yommddh.F90
+
+yommse.o: $(SRC)/yommse.F90 parkind1.o yomct0.o
+	$(FC) -c $(SRC)/yommse.F90
+
+yomnorgwd.o: $(SRC)/yomnorgwd.F90 parkind1.o
+	$(FC) -c $(SRC)/yomnorgwd.F90
+
+yomnrtaer.o: $(SRC)/yomnrtaer.F90 parkind1.o
+	$(FC) -c $(SRC)/yomnrtaer.F90
+
+yomparar.o: $(SRC)/yomparar.F90 parkind1.o modd_phyex.o
+	$(FC) -c $(SRC)/yomparar.F90
+
+yomphy.o: $(SRC)/yomphy.F90 parkind1.o yomdprecips.o yomdvisi.o yomcape.o yomdwet.o
+	$(FC) -c $(SRC)/yomphy.F90
+
+yomphy0.o: $(SRC)/yomphy0.F90 parkind1.o
+	$(FC) -c $(SRC)/yomphy0.F90
+
+yomphy1.o: $(SRC)/yomphy1.F90 parkind1.o
+	$(FC) -c $(SRC)/yomphy1.F90
+
+yomphy2.o: $(SRC)/yomphy2.F90 parkind1.o
+	$(FC) -c $(SRC)/yomphy2.F90
+
+yomphy3.o: $(SRC)/yomphy3.F90 parkind1.o
+	$(FC) -c $(SRC)/yomphy3.F90
+
+yomphyds.o: $(SRC)/yomphyds.F90 parkind1.o
+	$(FC) -c $(SRC)/yomphyds.F90
+
+yomsimphl.o: $(SRC)/yomsimphl.F90 parkind1.o
+	$(FC) -c $(SRC)/yomsimphl.F90
+
+yomtoph.o: $(SRC)/yomtoph.F90 parkind1.o
+	$(FC) -c $(SRC)/yomtoph.F90
+
+yomvdoz.o: $(SRC)/yomvdoz.F90 parkind1.o
+	$(FC) -c $(SRC)/yomvdoz.F90
+
+dummy.o: dummy.c
+	$(CC) -c $(SRC)/dummy.c
+get_time.o: get_time.c
+	$(CC) -c $(SRC)/get_time.c
+main_actke.x: main_actke.o abor1_acc_mod.o acbl89.o acbl89_openacc.o acevolet.o acevolet_openacc.o aclender.o aclender_openacc.o actke.o actke_openacc.o acturb.o acturb_openacc.o crc64_intrinsic.o eint_mod.o fl2hl.o fl2hl_openacc.o hl2fl.o hl2fl_openacc.o modd_budget.o modd_cloudparn.o modd_convpar.o modd_convpar_shal.o modd_convparext.o modd_cst.o modd_cturb.o modd_field.o modd_misc.o modd_nebn.o modd_nsv.o modd_param_icen.o modd_param_lima.o modd_param_lima_cold.o modd_param_lima_mixed.o modd_param_lima_warm.o modd_param_mfshalln.o modd_parameters.o modd_phyex.o modd_rain_ice_descrn.o modd_rain_ice_paramn.o modd_turbn.o model_physics_mf_mod.o parkind1.o stack_mod.o util_cloudpar_t_mod.o util_convpar_shal_mod.o util_convpar_t_mod.o util_convparext_mod.o util_cst_t_mod.o util_csturb_t_mod.o util_misc_t_mod.o util_model_physics_mf_type_mod.o util_neb_t_mod.o util_nsv_t_mod.o util_param_ice_t_mod.o util_param_lima_cold_t_mod.o util_param_lima_mixed_t_mod.o util_param_lima_t_mod.o util_param_lima_warm_t_mod.o util_param_mfshall_t_mod.o util_phyex_t_mod.o util_rain_ice_descr_t_mod.o util_rain_ice_param_t_mod.o util_sl_struct_mod.o util_tadvprs_mod.o util_taiop_mod.o util_tarphy_mod.o util_tcape_mod.o util_tcst_mod.o util_tcvmnh_mod.o util_tdprecips_mod.o util_tdvisi_mod.o util_tdwet_mod.o util_tfieldmetadata_mod.o util_tgradient_mod.o util_tgradient_ptr_mod.o util_tlddh_mod.o util_tlouis_mod.o util_tmddh_mod.o util_tmse_mod.o util_tnorgwd_mod.o util_tnrtaer_mod.o util_tparar_mod.o util_tphy0_mod.o util_tphy1_mod.o util_tphy2_mod.o util_tphy3_mod.o util_tphy_mod.o util_tphyds_mod.o util_tsimphl_mod.o util_ttoph_mod.o util_turb_t_mod.o util_tvdoz_mod.o xrd_getoptions.o xrd_unix_env.o yoaiop.o yomarphy.o yomcape.o yomcst.o yomct0.o yomcvmnh.o yomdata.o yomdgradient.o yomdprecips.o yomdvisi.o yomdwet.o yomhook.o yomlddh.o yomlouis.o yommddh.o yommse.o yomnorgwd.o yomnrtaer.o yomparar.o yomphy.o yomphy0.o yomphy1.o yomphy2.o yomphy3.o yomphyds.o yomsimphl.o yomtoph.o yomvdoz.o dummy.o get_time.o
+	$(FC) -o main_actke.x main_actke.o abor1_acc_mod.o acbl89.o acbl89_openacc.o acevolet.o acevolet_openacc.o aclender.o aclender_openacc.o actke.o actke_openacc.o acturb.o acturb_openacc.o crc64_intrinsic.o eint_mod.o fl2hl.o fl2hl_openacc.o hl2fl.o hl2fl_openacc.o modd_budget.o modd_cloudparn.o modd_convpar.o modd_convpar_shal.o modd_convparext.o modd_cst.o modd_cturb.o modd_field.o modd_misc.o modd_nebn.o modd_nsv.o modd_param_icen.o modd_param_lima.o modd_param_lima_cold.o modd_param_lima_mixed.o modd_param_lima_warm.o modd_param_mfshalln.o modd_parameters.o modd_phyex.o modd_rain_ice_descrn.o modd_rain_ice_paramn.o modd_turbn.o model_physics_mf_mod.o parkind1.o stack_mod.o util_cloudpar_t_mod.o util_convpar_shal_mod.o util_convpar_t_mod.o util_convparext_mod.o util_cst_t_mod.o util_csturb_t_mod.o util_misc_t_mod.o util_model_physics_mf_type_mod.o util_neb_t_mod.o util_nsv_t_mod.o util_param_ice_t_mod.o util_param_lima_cold_t_mod.o util_param_lima_mixed_t_mod.o util_param_lima_t_mod.o util_param_lima_warm_t_mod.o util_param_mfshall_t_mod.o util_phyex_t_mod.o util_rain_ice_descr_t_mod.o util_rain_ice_param_t_mod.o util_sl_struct_mod.o util_tadvprs_mod.o util_taiop_mod.o util_tarphy_mod.o util_tcape_mod.o util_tcst_mod.o util_tcvmnh_mod.o util_tdprecips_mod.o util_tdvisi_mod.o util_tdwet_mod.o util_tfieldmetadata_mod.o util_tgradient_mod.o util_tgradient_ptr_mod.o util_tlddh_mod.o util_tlouis_mod.o util_tmddh_mod.o util_tmse_mod.o util_tnorgwd_mod.o util_tnrtaer_mod.o util_tparar_mod.o util_tphy0_mod.o util_tphy1_mod.o util_tphy2_mod.o util_tphy3_mod.o util_tphy_mod.o util_tphyds_mod.o util_tsimphl_mod.o util_ttoph_mod.o util_turb_t_mod.o util_tvdoz_mod.o xrd_getoptions.o xrd_unix_env.o yoaiop.o yomarphy.o yomcape.o yomcst.o yomct0.o yomcvmnh.o yomdata.o yomdgradient.o yomdprecips.o yomdvisi.o yomdwet.o yomhook.o yomlddh.o yomlouis.o yommddh.o yommse.o yomnorgwd.o yomnrtaer.o yomparar.o yomphy.o yomphy0.o yomphy1.o yomphy2.o yomphy3.o yomphyds.o yomsimphl.o yomtoph.o yomvdoz.o dummy.o get_time.o $(LIBS)
+
+
+subclean:
+	\rm -f acbl89.o acbl89_openacc.o acevolet.o acevolet_openacc.o aclender.o aclender_openacc.o actke.o actke_openacc.o acturb.o acturb_openacc.o fl2hl.o fl2hl_openacc.o hl2fl.o hl2fl_openacc.o main_actke.o
+
+clean: 
+	\rm -f *.o *.xml *.a *.x *.mod *.optrpt 
+
+tidy:
+	\rm -f *.xml *.optrpt
