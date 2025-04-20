@@ -126,11 +126,11 @@ CALL GETOPTION ("--diff", LLDIFF)
 CALL GETOPTION ("--stat", LLSTAT)
 
 #ifdef PARKIND1_SINGLE
-ISIZE4 = 80;
-ISIZE8 = 10;
+ISIZE4 = 50;
+ISIZE8 = 5;
 #else
-ISIZE4 = 10;
-ISIZE8 = 80;
+ISIZE4 = 5;
+ISIZE8 = 50;
 #endif
 CALL GETOPTION ("--stack-size-4", ISIZE4)
 CALL GETOPTION ("--stack-size-8", ISIZE8)
