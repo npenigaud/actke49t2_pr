@@ -6,3 +6,4 @@
 *.ok
 .*.swp
 compile.*
+slurm-*.out
