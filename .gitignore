@@ -5,3 +5,4 @@
 *.F90.xml
 *.ok
 .*.swp
+compile.*
