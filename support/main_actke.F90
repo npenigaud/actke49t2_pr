@@ -1,8 +1,8 @@
 PROGRAM MAIN_ACTKE
 
-#ifdef PGI
+!ifdef PGI
 USE NVTX
-#endif
+!endif
 
 USE YOMDATA
 
@@ -259,9 +259,9 @@ IF (ITIME == 1) THEN
 
 ENDIF
 
-#ifdef PGI
+!ifdef PGI
 CALL NVTXSTARTRANGE ("ACTKE_OPENACC")
-#endif
+!endif
 
 #ifdef USE_OPENACC
 !$ACC PARALLEL LOOP GANG &
@@ -320,9 +320,9 @@ CALL NVTXSTARTRANGE ("ACTKE_OPENACC")
 !$OMP END TARGET TEAMS LOOP
 #endif
 
-#ifdef PGI
+!ifdef PGI
 CALL NVTXENDRANGE
-#endif
+!endif
 
   ENDIF
 

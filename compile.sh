@@ -6,7 +6,7 @@ module load nvhpc/25.3
 set -x
 set -e
 
-for arch in gpu_nvhpc_d 
+for arch in gpu_nvhpc_d gpu_nvhpc_d_use_openacc
 do 
   \rm -f compile.$arch/main_actke.x
   ./scripts/compile.pl --arch $arch --compile --update 
