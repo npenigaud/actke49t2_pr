@@ -7,3 +7,5 @@
 .*.swp
 compile.*
 slurm-*.out
+*.nsys-rep
+stat.txt

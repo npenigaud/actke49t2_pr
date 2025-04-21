@@ -1,6 +1,5 @@
 PROGRAM MAIN_ACTKE
 
-
 #ifdef PGI
 USE NVTX
 #endif
@@ -192,13 +191,16 @@ DO ITIME = 1, NTIME
 !$OMP PARALLEL DO PRIVATE (JBLK)
     DO JBLK = 1, NGPBLKS
 
-      CALL ACTKE (YDCST, YDML_PHY_MF, 1, NPROMA, NPROMA, KTDIAT, KTDIAN, KLEV,  &
+      CALL ACTKE (YDCST, &
+!     & YDLDDH, YDMDDH, &
+      & YDML_PHY_MF, 1, NPROMA, NPROMA, KTDIAT, KTDIAN, KLEV,  &
       & PAPHI (:,:,JBLK), PAPHIF (:,:,JBLK), PAPRS (:,:,JBLK), PAPRSF (:,:,JBLK), PDELP (:,:,JBLK), PR (:,:,JBLK), PT (:,:,JBLK), &
       & PU (:,:,JBLK), PV (:,:,JBLK), PQ (:,:,JBLK), PQICONV (:,:,JBLK),  PQLCONV (:,:,JBLK), PLSCPE (:,:,JBLK), PCD (:,JBLK), &
       & PCH (:,JBLK), PGZ0 (:,JBLK), PTS (:,JBLK), PQS (:,JBLK), PQICE (:,:,JBLK), PQLI (:,:,JBLK), PECT (:,:,JBLK), &
       & PPRODTH (:,:,JBLK),  PNLAB (:,:,JBLK), PNLABCVP (:,:,JBLK), PKTROV (:,:,JBLK), PKQROV (:,:,JBLK), PKQLROV (:,:,JBLK), &
       & PKUROV (:,:,JBLK), PXTROV (:,:,JBLK), PXUROV (:,:,JBLK), PNBVNO (:,:,JBLK),  PNEBS (:,:,JBLK), PQCS (:,:,JBLK), PNEBS0 (:,:,JBLK), &
       & PQCS0 (:,:,JBLK), PCOEFN (:,:,JBLK), PFECT (:,:,JBLK), PFECTI (:,:,JBLK), PECT1 (:,:,JBLK))
+!     &  PTPRDY (:,:,JBLK), PEDR (:,:,JBLK))
 
     ENDDO
 !$OMP END PARALLEL DO
@@ -222,13 +224,16 @@ ENDIF
         YLSTACK%L4 = stack_l4 (YSTACK, JBLK, NGPBLKS)
         YLSTACK%U4 = stack_u4 (YSTACK, JBLK, NGPBLKS)
 
-        CALL ACTKE_OPENACC (YDCST, YDML_PHY_MF, JLON, JLON, NPROMA, KTDIAT, KTDIAN, KLEV,  &
+        CALL ACTKE_OPENACC (YDCST, &
+!       & YDLDDH, YDMDDH, &
+        & YDML_PHY_MF, JLON, JLON, NPROMA, KTDIAT, KTDIAN, KLEV,  &
         & PAPHI (:,:,JBLK), PAPHIF (:,:,JBLK), PAPRS (:,:,JBLK), PAPRSF (:,:,JBLK), PDELP (:,:,JBLK), PR (:,:,JBLK), PT (:,:,JBLK), &
         & PU (:,:,JBLK), PV (:,:,JBLK), PQ (:,:,JBLK), PQICONV (:,:,JBLK),  PQLCONV (:,:,JBLK), PLSCPE (:,:,JBLK), PCD (:,JBLK), &
         & PCH (:,JBLK), PGZ0 (:,JBLK), PTS (:,JBLK), PQS (:,JBLK), PQICE (:,:,JBLK), PQLI (:,:,JBLK), PECT (:,:,JBLK), &
         & PPRODTH (:,:,JBLK),  PNLAB (:,:,JBLK), PNLABCVP (:,:,JBLK), PKTROV (:,:,JBLK), PKQROV (:,:,JBLK), PKQLROV (:,:,JBLK), &
         & PKUROV (:,:,JBLK), PXTROV (:,:,JBLK), PXUROV (:,:,JBLK), PNBVNO (:,:,JBLK),  PNEBS (:,:,JBLK), PQCS (:,:,JBLK), PNEBS0 (:,:,JBLK), &
         & PQCS0 (:,:,JBLK), PCOEFN (:,:,JBLK), PFECT (:,:,JBLK), PFECTI (:,:,JBLK), PECT1 (:,:,JBLK), &
+!       & PTPRDY (:,:,JBLK), PEDR (:,:,JBLK), &
         & YDSTACK=YLSTACK)
 
       ENDDO
@@ -287,13 +292,16 @@ CALL NVTXSTARTRANGE ("ACTKE_OPENACC")
         YLSTACK%L4 = stack_l4 (YSTACK, JBLK, NGPBLKS)
         YLSTACK%U4 = stack_u4 (YSTACK, JBLK, NGPBLKS)
 
-        CALL ACTKE_OPENACC (YDCST, YDML_PHY_MF, JLON, JLON, NPROMA, KTDIAT, KTDIAN, KLEV,  &
+        CALL ACTKE_OPENACC (YDCST, &
+!       & YDLDDH, YDMDDH, &
+        & YDML_PHY_MF, JLON, JLON, NPROMA, KTDIAT, KTDIAN, KLEV,  &
         & PAPHI (:,:,JBLK), PAPHIF (:,:,JBLK), PAPRS (:,:,JBLK), PAPRSF (:,:,JBLK), PDELP (:,:,JBLK), PR (:,:,JBLK), PT (:,:,JBLK), &
         & PU (:,:,JBLK), PV (:,:,JBLK), PQ (:,:,JBLK), PQICONV (:,:,JBLK),  PQLCONV (:,:,JBLK), PLSCPE (:,:,JBLK), PCD (:,JBLK), &
         & PCH (:,JBLK), PGZ0 (:,JBLK), PTS (:,JBLK), PQS (:,JBLK), PQICE (:,:,JBLK), PQLI (:,:,JBLK), PECT (:,:,JBLK), &
         & PPRODTH (:,:,JBLK),  PNLAB (:,:,JBLK), PNLABCVP (:,:,JBLK), PKTROV (:,:,JBLK), PKQROV (:,:,JBLK), PKQLROV (:,:,JBLK), &
         & PKUROV (:,:,JBLK), PXTROV (:,:,JBLK), PXUROV (:,:,JBLK), PNBVNO (:,:,JBLK),  PNEBS (:,:,JBLK), PQCS (:,:,JBLK), PNEBS0 (:,:,JBLK), &
         & PQCS0 (:,:,JBLK), PCOEFN (:,:,JBLK), PFECT (:,:,JBLK), PFECTI (:,:,JBLK), PECT1 (:,:,JBLK), &
+!       & PTPRDY (:,:,JBLK), PEDR (:,:,JBLK), &
         & YDSTACK=YLSTACK)
 
       ENDDO
