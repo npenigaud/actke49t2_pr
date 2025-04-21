@@ -111,7 +111,14 @@ sub preProcessIfNewer
       &ReDim::reDim ($d);
       &saveToFile ($d, "tmp/reDim/$f2");
 
-      &OpenACC::routineSeq ($pu);
+      if ($args{openmp})
+        {
+          &OpenMP::routineSeq ($pu);
+        }
+      else
+        {
+          &OpenACC::routineSeq ($pu);
+        }
 
       &Stack::addStack ($d, stack84 => 1);
       &saveToFile ($d, "tmp/addStack/$f2");
@@ -129,7 +136,7 @@ sub preProcessIfNewer
 
 }
 
-my @opts_f = qw (update compile compare compare-prompt);
+my @opts_f = qw (update compile compare compare-prompt openmp);
 my @opts_s = qw (arch);
 
 
@@ -155,7 +162,7 @@ if ($opts{update})
     
     for my $f (@compute)
       {
-        &preProcessIfNewer ("../compute/$f", $f);
+        &preProcessIfNewer ("../compute/$f", $f, openmp => $opts{openmp});
       }
 
     &copy ("../Makefile.$opts{arch}", "Makefile.inc");
@@ -175,4 +182,17 @@ if ($opts{compare})
   }
 
 
+package OpenMP;
 
+use strict;
+use Fxtran;
+
+sub routineSeq
+{
+  my $d = shift;
+  my ($N) = &F ('./subroutine-stmt/subroutine-N', $d, 1); 
+  $d->insertAfter (&n ("<C>!\$omp declare target</C>"), $d->firstChild);
+  $d->insertAfter (&t ("\n"), $d->firstChild);
+}
+
+1;
