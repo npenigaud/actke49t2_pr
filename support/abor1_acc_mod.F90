@@ -6,7 +6,13 @@ SUBROUTINE ABOR1_ACC (CDMESS)
 
 CHARACTER (LEN=*) :: CDMESS
 
+#ifdef USE_OPENACC
 !$acc routine (ABOR1_ACC) seq
+#endif
+
+#ifdef USE_OPENMP
+!$OMP DECLARE TARGET
+#endif
 
 PRINT *, " ABOR1_ACC "
 PRINT *, CDMESS

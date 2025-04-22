@@ -1,5 +1,7 @@
 MODULE UTIL_TPHY0_MOD
 
+#include "util.h"
+
 USE YOMPHY0, ONLY : TPHY0
 
 INTERFACE SAVE
@@ -1532,8 +1534,8 @@ IF (PRESENT (LDCREATED)) THEN
   LLCREATED = LDCREATED
 ENDIF
 IF (.NOT. LLCREATED) THEN
-  !$acc enter data create (YD)
-  !$acc update device (YD)
+  GPU_CREATE(YD)
+  GPU_UPDATE_DEVICE(YD)
 ENDIF
 
 
@@ -1993,44 +1995,44 @@ ENDIF
 
 LRHUC = ALLOCATED (YD%RHUC)
 IF (LRHUC) THEN
-  !$acc enter data create (YD%RHUC)
-  !$acc update device (YD%RHUC)
-  !$acc enter data attach (YD%RHUC)
+  GPU_CREATE(YD%RHUC)
+  GPU_UPDATE_DEVICE(YD%RHUC)
+  GPU_ATTACH(YD%RHUC)
 ENDIF
 
 LRQSMOD = ALLOCATED (YD%RQSMOD)
 IF (LRQSMOD) THEN
-  !$acc enter data create (YD%RQSMOD)
-  !$acc update device (YD%RQSMOD)
-  !$acc enter data attach (YD%RQSMOD)
+  GPU_CREATE(YD%RQSMOD)
+  GPU_UPDATE_DEVICE(YD%RQSMOD)
+  GPU_ATTACH(YD%RQSMOD)
 ENDIF
 
 LRSURF = ALLOCATED (YD%RSURF)
 IF (LRSURF) THEN
-  !$acc enter data create (YD%RSURF)
-  !$acc update device (YD%RSURF)
-  !$acc enter data attach (YD%RSURF)
+  GPU_CREATE(YD%RSURF)
+  GPU_UPDATE_DEVICE(YD%RSURF)
+  GPU_ATTACH(YD%RSURF)
 ENDIF
 
 LRN1D = ALLOCATED (YD%RN1D)
 IF (LRN1D) THEN
-  !$acc enter data create (YD%RN1D)
-  !$acc update device (YD%RN1D)
-  !$acc enter data attach (YD%RN1D)
+  GPU_CREATE(YD%RN1D)
+  GPU_UPDATE_DEVICE(YD%RN1D)
+  GPU_ATTACH(YD%RN1D)
 ENDIF
 
 LRRC1D = ALLOCATED (YD%RRC1D)
 IF (LRRC1D) THEN
-  !$acc enter data create (YD%RRC1D)
-  !$acc update device (YD%RRC1D)
-  !$acc enter data attach (YD%RRC1D)
+  GPU_CREATE(YD%RRC1D)
+  GPU_UPDATE_DEVICE(YD%RRC1D)
+  GPU_ATTACH(YD%RRC1D)
 ENDIF
 
 LRSRC1D = ALLOCATED (YD%RSRC1D)
 IF (LRSRC1D) THEN
-  !$acc enter data create (YD%RSRC1D)
-  !$acc update device (YD%RSRC1D)
-  !$acc enter data attach (YD%RSRC1D)
+  GPU_CREATE(YD%RSRC1D)
+  GPU_UPDATE_DEVICE(YD%RSRC1D)
+  GPU_ATTACH(YD%RSRC1D)
 ENDIF
 
 
@@ -3929,38 +3931,38 @@ ENDIF
 
 LRHUC = ALLOCATED (YD%RHUC)
 IF (LRHUC) THEN
-  !$acc exit data detach (YD%RHUC)
-  !$acc exit data delete (YD%RHUC)
+  GPU_DETACH(YD%RHUC)
+  GPU_DELETE(YD%RHUC)
 ENDIF
 
 LRQSMOD = ALLOCATED (YD%RQSMOD)
 IF (LRQSMOD) THEN
-  !$acc exit data detach (YD%RQSMOD)
-  !$acc exit data delete (YD%RQSMOD)
+  GPU_DETACH(YD%RQSMOD)
+  GPU_DELETE(YD%RQSMOD)
 ENDIF
 
 LRSURF = ALLOCATED (YD%RSURF)
 IF (LRSURF) THEN
-  !$acc exit data detach (YD%RSURF)
-  !$acc exit data delete (YD%RSURF)
+  GPU_DETACH(YD%RSURF)
+  GPU_DELETE(YD%RSURF)
 ENDIF
 
 LRN1D = ALLOCATED (YD%RN1D)
 IF (LRN1D) THEN
-  !$acc exit data detach (YD%RN1D)
-  !$acc exit data delete (YD%RN1D)
+  GPU_DETACH(YD%RN1D)
+  GPU_DELETE(YD%RN1D)
 ENDIF
 
 LRRC1D = ALLOCATED (YD%RRC1D)
 IF (LRRC1D) THEN
-  !$acc exit data detach (YD%RRC1D)
-  !$acc exit data delete (YD%RRC1D)
+  GPU_DETACH(YD%RRC1D)
+  GPU_DELETE(YD%RRC1D)
 ENDIF
 
 LRSRC1D = ALLOCATED (YD%RSRC1D)
 IF (LRSRC1D) THEN
-  !$acc exit data detach (YD%RSRC1D)
-  !$acc exit data delete (YD%RSRC1D)
+  GPU_DETACH(YD%RSRC1D)
+  GPU_DELETE(YD%RSRC1D)
 ENDIF
 
 
@@ -3972,7 +3974,7 @@ IF (PRESENT (LDDELETED)) THEN
   LLDELETED = LDDELETED
 ENDIF
 IF (.NOT. LLDELETED) THEN
-  !$acc exit data delete (YD)
+  GPU_DELETE(YD)
 ENDIF
 END SUBROUTINE
 

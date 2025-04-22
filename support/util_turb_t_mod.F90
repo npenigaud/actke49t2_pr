@@ -1,5 +1,7 @@
 MODULE UTIL_TURB_T_MOD
 
+#include "util.h"
+
 USE MODD_TURB_n, ONLY : TURB_T
 
 INTERFACE SAVE
@@ -286,8 +288,8 @@ IF (PRESENT (LDCREATED)) THEN
   LLCREATED = LDCREATED
 ENDIF
 IF (.NOT. LLCREATED) THEN
-  !$acc enter data create (YD)
-  !$acc update device (YD)
+  GPU_CREATE(YD)
+  GPU_UPDATE_DEVICE(YD)
 ENDIF
 
 
@@ -312,65 +314,65 @@ ENDIF
 
 LXDYP = ASSOCIATED (YD%XDYP)
 IF (LXDYP) THEN
-  !$acc enter data create (YD%XDYP)
-  !$acc update device (YD%XDYP)
-  !$acc enter data attach (YD%XDYP)
+  GPU_CREATE(YD%XDYP)
+  GPU_UPDATE_DEVICE(YD%XDYP)
+  GPU_ATTACH(YD%XDYP)
 ENDIF
 
 LXTHP = ASSOCIATED (YD%XTHP)
 IF (LXTHP) THEN
-  !$acc enter data create (YD%XTHP)
-  !$acc update device (YD%XTHP)
-  !$acc enter data attach (YD%XTHP)
+  GPU_CREATE(YD%XTHP)
+  GPU_UPDATE_DEVICE(YD%XTHP)
+  GPU_ATTACH(YD%XTHP)
 ENDIF
 
 LXTR = ASSOCIATED (YD%XTR)
 IF (LXTR) THEN
-  !$acc enter data create (YD%XTR)
-  !$acc update device (YD%XTR)
-  !$acc enter data attach (YD%XTR)
+  GPU_CREATE(YD%XTR)
+  GPU_UPDATE_DEVICE(YD%XTR)
+  GPU_ATTACH(YD%XTR)
 ENDIF
 
 LXDISS = ASSOCIATED (YD%XDISS)
 IF (LXDISS) THEN
-  !$acc enter data create (YD%XDISS)
-  !$acc update device (YD%XDISS)
-  !$acc enter data attach (YD%XDISS)
+  GPU_CREATE(YD%XDISS)
+  GPU_UPDATE_DEVICE(YD%XDISS)
+  GPU_ATTACH(YD%XDISS)
 ENDIF
 
 LXLEM = ASSOCIATED (YD%XLEM)
 IF (LXLEM) THEN
-  !$acc enter data create (YD%XLEM)
-  !$acc update device (YD%XLEM)
-  !$acc enter data attach (YD%XLEM)
+  GPU_CREATE(YD%XLEM)
+  GPU_UPDATE_DEVICE(YD%XLEM)
+  GPU_ATTACH(YD%XLEM)
 ENDIF
 
 LXSSUFL_C = ASSOCIATED (YD%XSSUFL_C)
 IF (LXSSUFL_C) THEN
-  !$acc enter data create (YD%XSSUFL_C)
-  !$acc update device (YD%XSSUFL_C)
-  !$acc enter data attach (YD%XSSUFL_C)
+  GPU_CREATE(YD%XSSUFL_C)
+  GPU_UPDATE_DEVICE(YD%XSSUFL_C)
+  GPU_ATTACH(YD%XSSUFL_C)
 ENDIF
 
 LXSSVFL_C = ASSOCIATED (YD%XSSVFL_C)
 IF (LXSSVFL_C) THEN
-  !$acc enter data create (YD%XSSVFL_C)
-  !$acc update device (YD%XSSVFL_C)
-  !$acc enter data attach (YD%XSSVFL_C)
+  GPU_CREATE(YD%XSSVFL_C)
+  GPU_UPDATE_DEVICE(YD%XSSVFL_C)
+  GPU_ATTACH(YD%XSSVFL_C)
 ENDIF
 
 LXSSTFL_C = ASSOCIATED (YD%XSSTFL_C)
 IF (LXSSTFL_C) THEN
-  !$acc enter data create (YD%XSSTFL_C)
-  !$acc update device (YD%XSSTFL_C)
-  !$acc enter data attach (YD%XSSTFL_C)
+  GPU_CREATE(YD%XSSTFL_C)
+  GPU_UPDATE_DEVICE(YD%XSSTFL_C)
+  GPU_ATTACH(YD%XSSTFL_C)
 ENDIF
 
 LXSSRFL_C = ASSOCIATED (YD%XSSRFL_C)
 IF (LXSSRFL_C) THEN
-  !$acc enter data create (YD%XSSRFL_C)
-  !$acc update device (YD%XSSRFL_C)
-  !$acc enter data attach (YD%XSSRFL_C)
+  GPU_CREATE(YD%XSSRFL_C)
+  GPU_UPDATE_DEVICE(YD%XSSRFL_C)
+  GPU_ATTACH(YD%XSSRFL_C)
 ENDIF
 
 
@@ -581,56 +583,56 @@ ENDIF
 
 LXDYP = ASSOCIATED (YD%XDYP)
 IF (LXDYP) THEN
-  !$acc exit data detach (YD%XDYP)
-  !$acc exit data delete (YD%XDYP)
+  GPU_DETACH(YD%XDYP)
+  GPU_DELETE(YD%XDYP)
 ENDIF
 
 LXTHP = ASSOCIATED (YD%XTHP)
 IF (LXTHP) THEN
-  !$acc exit data detach (YD%XTHP)
-  !$acc exit data delete (YD%XTHP)
+  GPU_DETACH(YD%XTHP)
+  GPU_DELETE(YD%XTHP)
 ENDIF
 
 LXTR = ASSOCIATED (YD%XTR)
 IF (LXTR) THEN
-  !$acc exit data detach (YD%XTR)
-  !$acc exit data delete (YD%XTR)
+  GPU_DETACH(YD%XTR)
+  GPU_DELETE(YD%XTR)
 ENDIF
 
 LXDISS = ASSOCIATED (YD%XDISS)
 IF (LXDISS) THEN
-  !$acc exit data detach (YD%XDISS)
-  !$acc exit data delete (YD%XDISS)
+  GPU_DETACH(YD%XDISS)
+  GPU_DELETE(YD%XDISS)
 ENDIF
 
 LXLEM = ASSOCIATED (YD%XLEM)
 IF (LXLEM) THEN
-  !$acc exit data detach (YD%XLEM)
-  !$acc exit data delete (YD%XLEM)
+  GPU_DETACH(YD%XLEM)
+  GPU_DELETE(YD%XLEM)
 ENDIF
 
 LXSSUFL_C = ASSOCIATED (YD%XSSUFL_C)
 IF (LXSSUFL_C) THEN
-  !$acc exit data detach (YD%XSSUFL_C)
-  !$acc exit data delete (YD%XSSUFL_C)
+  GPU_DETACH(YD%XSSUFL_C)
+  GPU_DELETE(YD%XSSUFL_C)
 ENDIF
 
 LXSSVFL_C = ASSOCIATED (YD%XSSVFL_C)
 IF (LXSSVFL_C) THEN
-  !$acc exit data detach (YD%XSSVFL_C)
-  !$acc exit data delete (YD%XSSVFL_C)
+  GPU_DETACH(YD%XSSVFL_C)
+  GPU_DELETE(YD%XSSVFL_C)
 ENDIF
 
 LXSSTFL_C = ASSOCIATED (YD%XSSTFL_C)
 IF (LXSSTFL_C) THEN
-  !$acc exit data detach (YD%XSSTFL_C)
-  !$acc exit data delete (YD%XSSTFL_C)
+  GPU_DETACH(YD%XSSTFL_C)
+  GPU_DELETE(YD%XSSTFL_C)
 ENDIF
 
 LXSSRFL_C = ASSOCIATED (YD%XSSRFL_C)
 IF (LXSSRFL_C) THEN
-  !$acc exit data detach (YD%XSSRFL_C)
-  !$acc exit data delete (YD%XSSRFL_C)
+  GPU_DETACH(YD%XSSRFL_C)
+  GPU_DELETE(YD%XSSRFL_C)
 ENDIF
 
 
@@ -653,7 +655,7 @@ IF (PRESENT (LDDELETED)) THEN
   LLDELETED = LDDELETED
 ENDIF
 IF (.NOT. LLDELETED) THEN
-  !$acc exit data delete (YD)
+  GPU_DELETE(YD)
 ENDIF
 END SUBROUTINE
 

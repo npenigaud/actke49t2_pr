@@ -1,5 +1,7 @@
 MODULE UTIL_PARAM_LIMA_WARM_T_MOD
 
+#include "util.h"
+
 USE MODD_PARAM_LIMA_WARM, ONLY : PARAM_LIMA_WARM_T
 
 INTERFACE SAVE
@@ -392,8 +394,8 @@ IF (PRESENT (LDCREATED)) THEN
   LLCREATED = LDCREATED
 ENDIF
 IF (.NOT. LLCREATED) THEN
-  !$acc enter data create (YD)
-  !$acc update device (YD)
+  GPU_CREATE(YD)
+  GPU_UPDATE_DEVICE(YD)
 ENDIF
 
 
@@ -430,16 +432,16 @@ ENDIF
 
 LXHYPF12 = ALLOCATED (YD%XHYPF12)
 IF (LXHYPF12) THEN
-  !$acc enter data create (YD%XHYPF12)
-  !$acc update device (YD%XHYPF12)
-  !$acc enter data attach (YD%XHYPF12)
+  GPU_CREATE(YD%XHYPF12)
+  GPU_UPDATE_DEVICE(YD%XHYPF12)
+  GPU_ATTACH(YD%XHYPF12)
 ENDIF
 
 LXHYPF32 = ALLOCATED (YD%XHYPF32)
 IF (LXHYPF32) THEN
-  !$acc enter data create (YD%XHYPF32)
-  !$acc update device (YD%XHYPF32)
-  !$acc enter data attach (YD%XHYPF32)
+  GPU_CREATE(YD%XHYPF32)
+  GPU_UPDATE_DEVICE(YD%XHYPF32)
+  GPU_ATTACH(YD%XHYPF32)
 ENDIF
 
 
@@ -447,51 +449,51 @@ ENDIF
 
 LXAHENG = ALLOCATED (YD%XAHENG)
 IF (LXAHENG) THEN
-  !$acc enter data create (YD%XAHENG)
-  !$acc update device (YD%XAHENG)
-  !$acc enter data attach (YD%XAHENG)
+  GPU_CREATE(YD%XAHENG)
+  GPU_UPDATE_DEVICE(YD%XAHENG)
+  GPU_ATTACH(YD%XAHENG)
 ENDIF
 
 LXAHENG2 = ALLOCATED (YD%XAHENG2)
 IF (LXAHENG2) THEN
-  !$acc enter data create (YD%XAHENG2)
-  !$acc update device (YD%XAHENG2)
-  !$acc enter data attach (YD%XAHENG2)
+  GPU_CREATE(YD%XAHENG2)
+  GPU_UPDATE_DEVICE(YD%XAHENG2)
+  GPU_ATTACH(YD%XAHENG2)
 ENDIF
 
 LXAHENG3 = ALLOCATED (YD%XAHENG3)
 IF (LXAHENG3) THEN
-  !$acc enter data create (YD%XAHENG3)
-  !$acc update device (YD%XAHENG3)
-  !$acc enter data attach (YD%XAHENG3)
+  GPU_CREATE(YD%XAHENG3)
+  GPU_UPDATE_DEVICE(YD%XAHENG3)
+  GPU_ATTACH(YD%XAHENG3)
 ENDIF
 
 LXPSI1 = ALLOCATED (YD%XPSI1)
 IF (LXPSI1) THEN
-  !$acc enter data create (YD%XPSI1)
-  !$acc update device (YD%XPSI1)
-  !$acc enter data attach (YD%XPSI1)
+  GPU_CREATE(YD%XPSI1)
+  GPU_UPDATE_DEVICE(YD%XPSI1)
+  GPU_ATTACH(YD%XPSI1)
 ENDIF
 
 LXPSI3 = ALLOCATED (YD%XPSI3)
 IF (LXPSI3) THEN
-  !$acc enter data create (YD%XPSI3)
-  !$acc update device (YD%XPSI3)
-  !$acc enter data attach (YD%XPSI3)
+  GPU_CREATE(YD%XPSI3)
+  GPU_UPDATE_DEVICE(YD%XPSI3)
+  GPU_ATTACH(YD%XPSI3)
 ENDIF
 
 LXAHENF = ALLOCATED (YD%XAHENF)
 IF (LXAHENF) THEN
-  !$acc enter data create (YD%XAHENF)
-  !$acc update device (YD%XAHENF)
-  !$acc enter data attach (YD%XAHENF)
+  GPU_CREATE(YD%XAHENF)
+  GPU_UPDATE_DEVICE(YD%XAHENF)
+  GPU_ATTACH(YD%XAHENF)
 ENDIF
 
 LXAHENY = ALLOCATED (YD%XAHENY)
 IF (LXAHENY) THEN
-  !$acc enter data create (YD%XAHENY)
-  !$acc update device (YD%XAHENY)
-  !$acc enter data attach (YD%XAHENY)
+  GPU_CREATE(YD%XAHENY)
+  GPU_UPDATE_DEVICE(YD%XAHENY)
+  GPU_ATTACH(YD%XAHENY)
 ENDIF
 
 
@@ -544,9 +546,9 @@ ENDIF
 
 LXCONCC_INI = ALLOCATED (YD%XCONCC_INI)
 IF (LXCONCC_INI) THEN
-  !$acc enter data create (YD%XCONCC_INI)
-  !$acc update device (YD%XCONCC_INI)
-  !$acc enter data attach (YD%XCONCC_INI)
+  GPU_CREATE(YD%XCONCC_INI)
+  GPU_UPDATE_DEVICE(YD%XCONCC_INI)
+  GPU_ATTACH(YD%XCONCC_INI)
 ENDIF
 
 
@@ -929,14 +931,14 @@ ENDIF
 
 LXHYPF12 = ALLOCATED (YD%XHYPF12)
 IF (LXHYPF12) THEN
-  !$acc exit data detach (YD%XHYPF12)
-  !$acc exit data delete (YD%XHYPF12)
+  GPU_DETACH(YD%XHYPF12)
+  GPU_DELETE(YD%XHYPF12)
 ENDIF
 
 LXHYPF32 = ALLOCATED (YD%XHYPF32)
 IF (LXHYPF32) THEN
-  !$acc exit data detach (YD%XHYPF32)
-  !$acc exit data delete (YD%XHYPF32)
+  GPU_DETACH(YD%XHYPF32)
+  GPU_DELETE(YD%XHYPF32)
 ENDIF
 
 
@@ -944,44 +946,44 @@ ENDIF
 
 LXAHENG = ALLOCATED (YD%XAHENG)
 IF (LXAHENG) THEN
-  !$acc exit data detach (YD%XAHENG)
-  !$acc exit data delete (YD%XAHENG)
+  GPU_DETACH(YD%XAHENG)
+  GPU_DELETE(YD%XAHENG)
 ENDIF
 
 LXAHENG2 = ALLOCATED (YD%XAHENG2)
 IF (LXAHENG2) THEN
-  !$acc exit data detach (YD%XAHENG2)
-  !$acc exit data delete (YD%XAHENG2)
+  GPU_DETACH(YD%XAHENG2)
+  GPU_DELETE(YD%XAHENG2)
 ENDIF
 
 LXAHENG3 = ALLOCATED (YD%XAHENG3)
 IF (LXAHENG3) THEN
-  !$acc exit data detach (YD%XAHENG3)
-  !$acc exit data delete (YD%XAHENG3)
+  GPU_DETACH(YD%XAHENG3)
+  GPU_DELETE(YD%XAHENG3)
 ENDIF
 
 LXPSI1 = ALLOCATED (YD%XPSI1)
 IF (LXPSI1) THEN
-  !$acc exit data detach (YD%XPSI1)
-  !$acc exit data delete (YD%XPSI1)
+  GPU_DETACH(YD%XPSI1)
+  GPU_DELETE(YD%XPSI1)
 ENDIF
 
 LXPSI3 = ALLOCATED (YD%XPSI3)
 IF (LXPSI3) THEN
-  !$acc exit data detach (YD%XPSI3)
-  !$acc exit data delete (YD%XPSI3)
+  GPU_DETACH(YD%XPSI3)
+  GPU_DELETE(YD%XPSI3)
 ENDIF
 
 LXAHENF = ALLOCATED (YD%XAHENF)
 IF (LXAHENF) THEN
-  !$acc exit data detach (YD%XAHENF)
-  !$acc exit data delete (YD%XAHENF)
+  GPU_DETACH(YD%XAHENF)
+  GPU_DELETE(YD%XAHENF)
 ENDIF
 
 LXAHENY = ALLOCATED (YD%XAHENY)
 IF (LXAHENY) THEN
-  !$acc exit data detach (YD%XAHENY)
-  !$acc exit data delete (YD%XAHENY)
+  GPU_DETACH(YD%XAHENY)
+  GPU_DELETE(YD%XAHENY)
 ENDIF
 
 
@@ -1034,8 +1036,8 @@ ENDIF
 
 LXCONCC_INI = ALLOCATED (YD%XCONCC_INI)
 IF (LXCONCC_INI) THEN
-  !$acc exit data detach (YD%XCONCC_INI)
-  !$acc exit data delete (YD%XCONCC_INI)
+  GPU_DETACH(YD%XCONCC_INI)
+  GPU_DELETE(YD%XCONCC_INI)
 ENDIF
 
 
@@ -1050,7 +1052,7 @@ IF (PRESENT (LDDELETED)) THEN
   LLDELETED = LDDELETED
 ENDIF
 IF (.NOT. LLDELETED) THEN
-  !$acc exit data delete (YD)
+  GPU_DELETE(YD)
 ENDIF
 END SUBROUTINE
 

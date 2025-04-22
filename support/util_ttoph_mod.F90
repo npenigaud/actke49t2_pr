@@ -1,5 +1,7 @@
 MODULE UTIL_TTOPH_MOD
 
+#include "util.h"
+
 USE YOMTOPH, ONLY : TTOPH
 
 INTERFACE SAVE
@@ -343,56 +345,56 @@ IF (PRESENT (LDCREATED)) THEN
   LLCREATED = LDCREATED
 ENDIF
 IF (.NOT. LLCREATED) THEN
-  !$acc enter data create (YD)
-  !$acc update device (YD)
+  GPU_CREATE(YD)
+  GPU_UPDATE_DEVICE(YD)
 ENDIF
 LRMESOU = ALLOCATED (YD%RMESOU)
 IF (LRMESOU) THEN
-  !$acc enter data create (YD%RMESOU)
-  !$acc update device (YD%RMESOU)
-  !$acc enter data attach (YD%RMESOU)
+  GPU_CREATE(YD%RMESOU)
+  GPU_UPDATE_DEVICE(YD%RMESOU)
+  GPU_ATTACH(YD%RMESOU)
 ENDIF
 
 LRMESOT = ALLOCATED (YD%RMESOT)
 IF (LRMESOT) THEN
-  !$acc enter data create (YD%RMESOT)
-  !$acc update device (YD%RMESOT)
-  !$acc enter data attach (YD%RMESOT)
+  GPU_CREATE(YD%RMESOT)
+  GPU_UPDATE_DEVICE(YD%RMESOT)
+  GPU_ATTACH(YD%RMESOT)
 ENDIF
 
 LRMESOQ = ALLOCATED (YD%RMESOQ)
 IF (LRMESOQ) THEN
-  !$acc enter data create (YD%RMESOQ)
-  !$acc update device (YD%RMESOQ)
-  !$acc enter data attach (YD%RMESOQ)
+  GPU_CREATE(YD%RMESOQ)
+  GPU_UPDATE_DEVICE(YD%RMESOQ)
+  GPU_ATTACH(YD%RMESOQ)
 ENDIF
 
 LRUREL = ALLOCATED (YD%RUREL)
 IF (LRUREL) THEN
-  !$acc enter data create (YD%RUREL)
-  !$acc update device (YD%RUREL)
-  !$acc enter data attach (YD%RUREL)
+  GPU_CREATE(YD%RUREL)
+  GPU_UPDATE_DEVICE(YD%RUREL)
+  GPU_ATTACH(YD%RUREL)
 ENDIF
 
 LRVREL = ALLOCATED (YD%RVREL)
 IF (LRVREL) THEN
-  !$acc enter data create (YD%RVREL)
-  !$acc update device (YD%RVREL)
-  !$acc enter data attach (YD%RVREL)
+  GPU_CREATE(YD%RVREL)
+  GPU_UPDATE_DEVICE(YD%RVREL)
+  GPU_ATTACH(YD%RVREL)
 ENDIF
 
 LRTREL = ALLOCATED (YD%RTREL)
 IF (LRTREL) THEN
-  !$acc enter data create (YD%RTREL)
-  !$acc update device (YD%RTREL)
-  !$acc enter data attach (YD%RTREL)
+  GPU_CREATE(YD%RTREL)
+  GPU_UPDATE_DEVICE(YD%RTREL)
+  GPU_ATTACH(YD%RTREL)
 ENDIF
 
 LRQREL = ALLOCATED (YD%RQREL)
 IF (LRQREL) THEN
-  !$acc enter data create (YD%RQREL)
-  !$acc update device (YD%RQREL)
-  !$acc enter data attach (YD%RQREL)
+  GPU_CREATE(YD%RQREL)
+  GPU_UPDATE_DEVICE(YD%RQREL)
+  GPU_ATTACH(YD%RQREL)
 ENDIF
 
 
@@ -685,44 +687,44 @@ IF (PRESENT (LDFIELDAPI)) THEN
 ENDIF
 LRMESOU = ALLOCATED (YD%RMESOU)
 IF (LRMESOU) THEN
-  !$acc exit data detach (YD%RMESOU)
-  !$acc exit data delete (YD%RMESOU)
+  GPU_DETACH(YD%RMESOU)
+  GPU_DELETE(YD%RMESOU)
 ENDIF
 
 LRMESOT = ALLOCATED (YD%RMESOT)
 IF (LRMESOT) THEN
-  !$acc exit data detach (YD%RMESOT)
-  !$acc exit data delete (YD%RMESOT)
+  GPU_DETACH(YD%RMESOT)
+  GPU_DELETE(YD%RMESOT)
 ENDIF
 
 LRMESOQ = ALLOCATED (YD%RMESOQ)
 IF (LRMESOQ) THEN
-  !$acc exit data detach (YD%RMESOQ)
-  !$acc exit data delete (YD%RMESOQ)
+  GPU_DETACH(YD%RMESOQ)
+  GPU_DELETE(YD%RMESOQ)
 ENDIF
 
 LRUREL = ALLOCATED (YD%RUREL)
 IF (LRUREL) THEN
-  !$acc exit data detach (YD%RUREL)
-  !$acc exit data delete (YD%RUREL)
+  GPU_DETACH(YD%RUREL)
+  GPU_DELETE(YD%RUREL)
 ENDIF
 
 LRVREL = ALLOCATED (YD%RVREL)
 IF (LRVREL) THEN
-  !$acc exit data detach (YD%RVREL)
-  !$acc exit data delete (YD%RVREL)
+  GPU_DETACH(YD%RVREL)
+  GPU_DELETE(YD%RVREL)
 ENDIF
 
 LRTREL = ALLOCATED (YD%RTREL)
 IF (LRTREL) THEN
-  !$acc exit data detach (YD%RTREL)
-  !$acc exit data delete (YD%RTREL)
+  GPU_DETACH(YD%RTREL)
+  GPU_DELETE(YD%RTREL)
 ENDIF
 
 LRQREL = ALLOCATED (YD%RQREL)
 IF (LRQREL) THEN
-  !$acc exit data detach (YD%RQREL)
-  !$acc exit data delete (YD%RQREL)
+  GPU_DETACH(YD%RQREL)
+  GPU_DELETE(YD%RQREL)
 ENDIF
 
 
@@ -788,7 +790,7 @@ IF (PRESENT (LDDELETED)) THEN
   LLDELETED = LDDELETED
 ENDIF
 IF (.NOT. LLDELETED) THEN
-  !$acc exit data delete (YD)
+  GPU_DELETE(YD)
 ENDIF
 END SUBROUTINE
 

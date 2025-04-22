@@ -1,5 +1,7 @@
 MODULE UTIL_TAIOP_MOD
 
+#include "util.h"
+
 USE YOAIOP, ONLY : TAIOP
 
 INTERFACE SAVE
@@ -271,8 +273,8 @@ IF (PRESENT (LDCREATED)) THEN
   LLCREATED = LDCREATED
 ENDIF
 IF (.NOT. LLCREATED) THEN
-  !$acc enter data create (YD)
-  !$acc update device (YD)
+  GPU_CREATE(YD)
+  GPU_UPDATE_DEVICE(YD)
 ENDIF
 
 
@@ -280,79 +282,79 @@ ENDIF
 
 LRSWAME = ALLOCATED (YD%RSWAME)
 IF (LRSWAME) THEN
-  !$acc enter data create (YD%RSWAME)
-  !$acc update device (YD%RSWAME)
-  !$acc enter data attach (YD%RSWAME)
+  GPU_CREATE(YD%RSWAME)
+  GPU_UPDATE_DEVICE(YD%RSWAME)
+  GPU_ATTACH(YD%RSWAME)
 ENDIF
 
 LRLWAME = ALLOCATED (YD%RLWAME)
 IF (LRLWAME) THEN
-  !$acc enter data create (YD%RLWAME)
-  !$acc update device (YD%RLWAME)
-  !$acc enter data attach (YD%RLWAME)
+  GPU_CREATE(YD%RLWAME)
+  GPU_UPDATE_DEVICE(YD%RLWAME)
+  GPU_ATTACH(YD%RLWAME)
 ENDIF
 
 LRSWAAS = ALLOCATED (YD%RSWAAS)
 IF (LRSWAAS) THEN
-  !$acc enter data create (YD%RSWAAS)
-  !$acc update device (YD%RSWAAS)
-  !$acc enter data attach (YD%RSWAAS)
+  GPU_CREATE(YD%RSWAAS)
+  GPU_UPDATE_DEVICE(YD%RSWAAS)
+  GPU_ATTACH(YD%RSWAAS)
 ENDIF
 
 LRLWAAS = ALLOCATED (YD%RLWAAS)
 IF (LRLWAAS) THEN
-  !$acc enter data create (YD%RLWAAS)
-  !$acc update device (YD%RLWAAS)
-  !$acc enter data attach (YD%RLWAAS)
+  GPU_CREATE(YD%RLWAAS)
+  GPU_UPDATE_DEVICE(YD%RLWAAS)
+  GPU_ATTACH(YD%RLWAAS)
 ENDIF
 
 LRSWASS = ALLOCATED (YD%RSWASS)
 IF (LRSWASS) THEN
-  !$acc enter data create (YD%RSWASS)
-  !$acc update device (YD%RSWASS)
-  !$acc enter data attach (YD%RSWASS)
+  GPU_CREATE(YD%RSWASS)
+  GPU_UPDATE_DEVICE(YD%RSWASS)
+  GPU_ATTACH(YD%RSWASS)
 ENDIF
 
 LRLWASS = ALLOCATED (YD%RLWASS)
 IF (LRLWASS) THEN
-  !$acc enter data create (YD%RLWASS)
-  !$acc update device (YD%RLWASS)
-  !$acc enter data attach (YD%RLWASS)
+  GPU_CREATE(YD%RLWASS)
+  GPU_UPDATE_DEVICE(YD%RLWASS)
+  GPU_ATTACH(YD%RLWASS)
 ENDIF
 
 LRSWWL = ALLOCATED (YD%RSWWL)
 IF (LRSWWL) THEN
-  !$acc enter data create (YD%RSWWL)
-  !$acc update device (YD%RSWWL)
-  !$acc enter data attach (YD%RSWWL)
+  GPU_CREATE(YD%RSWWL)
+  GPU_UPDATE_DEVICE(YD%RSWWL)
+  GPU_ATTACH(YD%RSWWL)
 ENDIF
 
 LRLWWL = ALLOCATED (YD%RLWWL)
 IF (LRLWWL) THEN
-  !$acc enter data create (YD%RLWWL)
-  !$acc update device (YD%RLWWL)
-  !$acc enter data attach (YD%RLWWL)
+  GPU_CREATE(YD%RLWWL)
+  GPU_UPDATE_DEVICE(YD%RLWWL)
+  GPU_ATTACH(YD%RLWWL)
 ENDIF
 
 LRSUNFR = ALLOCATED (YD%RSUNFR)
 IF (LRSUNFR) THEN
-  !$acc enter data create (YD%RSUNFR)
-  !$acc update device (YD%RSUNFR)
-  !$acc enter data attach (YD%RSUNFR)
+  GPU_CREATE(YD%RSUNFR)
+  GPU_UPDATE_DEVICE(YD%RSUNFR)
+  GPU_ATTACH(YD%RSUNFR)
 ENDIF
 
 LRRH = ALLOCATED (YD%RRH)
 IF (LRRH) THEN
-  !$acc enter data create (YD%RRH)
-  !$acc update device (YD%RRH)
-  !$acc enter data attach (YD%RRH)
+  GPU_CREATE(YD%RRH)
+  GPU_UPDATE_DEVICE(YD%RRH)
+  GPU_ATTACH(YD%RRH)
 ENDIF
 
 LRLWWEI = ALLOCATED (YD%RLWWEI)
 IF (LRLWWEI) THEN
-  !$acc enter data create (YD%RLWWEI)
-  !$acc update device (YD%RLWWEI)
-  !$acc enter data attach (YD%RLWWEI)
+  GPU_CREATE(YD%RLWWEI)
+  GPU_UPDATE_DEVICE(YD%RLWWEI)
+  GPU_ATTACH(YD%RLWWEI)
 ENDIF
 
 END SUBROUTINE
@@ -444,68 +446,68 @@ ENDIF
 
 LRSWAME = ALLOCATED (YD%RSWAME)
 IF (LRSWAME) THEN
-  !$acc exit data detach (YD%RSWAME)
-  !$acc exit data delete (YD%RSWAME)
+  GPU_DETACH(YD%RSWAME)
+  GPU_DELETE(YD%RSWAME)
 ENDIF
 
 LRLWAME = ALLOCATED (YD%RLWAME)
 IF (LRLWAME) THEN
-  !$acc exit data detach (YD%RLWAME)
-  !$acc exit data delete (YD%RLWAME)
+  GPU_DETACH(YD%RLWAME)
+  GPU_DELETE(YD%RLWAME)
 ENDIF
 
 LRSWAAS = ALLOCATED (YD%RSWAAS)
 IF (LRSWAAS) THEN
-  !$acc exit data detach (YD%RSWAAS)
-  !$acc exit data delete (YD%RSWAAS)
+  GPU_DETACH(YD%RSWAAS)
+  GPU_DELETE(YD%RSWAAS)
 ENDIF
 
 LRLWAAS = ALLOCATED (YD%RLWAAS)
 IF (LRLWAAS) THEN
-  !$acc exit data detach (YD%RLWAAS)
-  !$acc exit data delete (YD%RLWAAS)
+  GPU_DETACH(YD%RLWAAS)
+  GPU_DELETE(YD%RLWAAS)
 ENDIF
 
 LRSWASS = ALLOCATED (YD%RSWASS)
 IF (LRSWASS) THEN
-  !$acc exit data detach (YD%RSWASS)
-  !$acc exit data delete (YD%RSWASS)
+  GPU_DETACH(YD%RSWASS)
+  GPU_DELETE(YD%RSWASS)
 ENDIF
 
 LRLWASS = ALLOCATED (YD%RLWASS)
 IF (LRLWASS) THEN
-  !$acc exit data detach (YD%RLWASS)
-  !$acc exit data delete (YD%RLWASS)
+  GPU_DETACH(YD%RLWASS)
+  GPU_DELETE(YD%RLWASS)
 ENDIF
 
 LRSWWL = ALLOCATED (YD%RSWWL)
 IF (LRSWWL) THEN
-  !$acc exit data detach (YD%RSWWL)
-  !$acc exit data delete (YD%RSWWL)
+  GPU_DETACH(YD%RSWWL)
+  GPU_DELETE(YD%RSWWL)
 ENDIF
 
 LRLWWL = ALLOCATED (YD%RLWWL)
 IF (LRLWWL) THEN
-  !$acc exit data detach (YD%RLWWL)
-  !$acc exit data delete (YD%RLWWL)
+  GPU_DETACH(YD%RLWWL)
+  GPU_DELETE(YD%RLWWL)
 ENDIF
 
 LRSUNFR = ALLOCATED (YD%RSUNFR)
 IF (LRSUNFR) THEN
-  !$acc exit data detach (YD%RSUNFR)
-  !$acc exit data delete (YD%RSUNFR)
+  GPU_DETACH(YD%RSUNFR)
+  GPU_DELETE(YD%RSUNFR)
 ENDIF
 
 LRRH = ALLOCATED (YD%RRH)
 IF (LRRH) THEN
-  !$acc exit data detach (YD%RRH)
-  !$acc exit data delete (YD%RRH)
+  GPU_DETACH(YD%RRH)
+  GPU_DELETE(YD%RRH)
 ENDIF
 
 LRLWWEI = ALLOCATED (YD%RLWWEI)
 IF (LRLWWEI) THEN
-  !$acc exit data detach (YD%RLWWEI)
-  !$acc exit data delete (YD%RLWWEI)
+  GPU_DETACH(YD%RLWWEI)
+  GPU_DELETE(YD%RLWWEI)
 ENDIF
 
 LLDELETED = .FALSE.
@@ -513,7 +515,7 @@ IF (PRESENT (LDDELETED)) THEN
   LLDELETED = LDDELETED
 ENDIF
 IF (.NOT. LLDELETED) THEN
-  !$acc exit data delete (YD)
+  GPU_DELETE(YD)
 ENDIF
 END SUBROUTINE
 
