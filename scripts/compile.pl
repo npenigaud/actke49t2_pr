@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 use strict;
-use local::lib;
+
 use FindBin qw ($Bin);
 use lib "$ENV{HOME}/fxtran-acdc/lib";
 use FileHandle;
