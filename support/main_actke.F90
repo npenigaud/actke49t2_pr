@@ -180,7 +180,7 @@ DO JBLK = 1, 1
 #endif
 
 #ifdef USE_OPENMP
-!$OMP END PARALLEL DO
+!$OMP END PARALLEL DO SIMD
 #endif
 
   
