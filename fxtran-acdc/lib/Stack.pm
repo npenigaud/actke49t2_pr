@@ -140,11 +140,30 @@ sub addStack
           my $stmt = &Fxtran::stmt ($en_decl);
       
           my ($t) = &F ('./_T-spec_',   $stmt);     &Fxtran::expand ($t); $t = $t->textContent;
-          my ($s) = &F ('./array-spec', $en_decl);  &Fxtran::expand ($s); $s = $s->textContent;
+          my ($s) = &F ('./array-spec', $en_decl);  &Fxtran::expand ($s); 
+
+          my (@lb, @ub, @sz);
+
+          my @ss = &F ('./shape-spec-LT/shape-spec', $s);
+
+          my $nd = scalar (@ss);
       
+          for my $ss (@ss)
+            {
+              my ($lb) = &F ('./lower-bound/ANY-E', $ss, 1); $lb = 1 unless (defined ($lb)); 
+              my ($ub) = &F ('./upper-bound/ANY-E', $ss, 1); 
+              my $sz = "$ub-($lb)+1";
+              $sz = $ub if ($lb eq '1');
+              $sz = "$ub+1" if ($lb eq '0');
+              push @lb, $lb;
+              push @ub, $ub;
+              push @sz, $sz;
+            }
+
           if ($local)
             {
-              $stmt->parentNode->insertBefore (my $temp = &t ("temp ($t, $n, $s)"), $stmt);
+              my $S = join (', ', (':') x $nd);
+              $stmt->parentNode->insertBefore (my $temp = &t ("temp ($t, $n, ($S))"), $stmt);
       
               if (&Fxtran::removeListElement ($en_decl))
                 {
@@ -159,11 +178,14 @@ sub addStack
                 {
                   if ($opts{stack84})
                     {
+                      my $LB = join (', ', map { "$lb[$_]:" } (0 .. $nd-1));
+                      my $SZ = join (', ', map { $sz[$_] } (0 .. $nd-1));
+                        
                       my ($if) = &fxtran::parse (fragment => << "EOF");
 IF (KIND ($n) == 8) THEN
-  alloc8 ($n)
+  alloc8 ($n, (/$SZ/), ($LB))
 ELSEIF (KIND ($n) == 4) THEN
-  alloc4 ($n)
+  alloc4 ($n, (/$SZ/), ($LB))
 ELSE
   STOP 1
 ENDIF
