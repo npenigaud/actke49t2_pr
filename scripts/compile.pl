@@ -4,7 +4,7 @@ use strict;
 
 use local::lib;
 use FindBin qw ($Bin);
-use lib "$ENV{HOME}/fxtran-acdc/lib";
+use lib "$Bin/../fxtran-acdc/lib";
 use FileHandle;
 use File::Copy;
 use File::Basename;
