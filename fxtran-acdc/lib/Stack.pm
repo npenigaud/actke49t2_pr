@@ -138,7 +138,7 @@ sub addStack
           next if ($args{$n});
 
           my $stmt = &Fxtran::stmt ($en_decl);
-      
+
           my ($t) = &F ('./_T-spec_',   $stmt);     &Fxtran::expand ($t); $t = $t->textContent;
           my ($s) = &F ('./array-spec', $en_decl);  &Fxtran::expand ($s); 
 
@@ -178,19 +178,25 @@ sub addStack
                 {
                   if ($opts{stack84})
                     {
-                      my $LB = join (', ', map { "$lb[$_]:" } (0 .. $nd-1));
-                      my $SZ = join (', ', map { $sz[$_] } (0 .. $nd-1));
-                        
-                      my ($if) = &fxtran::parse (fragment => << "EOF");
-IF (KIND ($n) == 8) THEN
-  alloc8 ($n, (/$SZ/), ($LB))
-ELSEIF (KIND ($n) == 4) THEN
-  alloc4 ($n, (/$SZ/), ($LB))
-ELSE
-  STOP 1
-ENDIF
-EOF
-                      $C->parentNode->insertBefore ($if, $C);
+                      my $SZ = join ('*', map { "($sz[$_])" } (0 .. $nd-1));
+                      my $SH = join (',', map { "$lb[$_]:$ub[$_]" } (0 .. $nd-1));
+
+                      my $alloc;
+
+                      if ($t =~ m/^REAL/o)
+                        {
+                          $alloc = &s ("alloc8 ($n, ($SH), $SZ)");
+                        } 
+                      elsif ($t =~ m/^INTEGER/o)
+                        {
+                          $alloc = &s ("alloc4 ($n, ($SH), $SZ)");
+                        } 
+                      else
+                        {
+                          die ("Unexpected type $t");
+                        }
+
+                      $C->parentNode->insertBefore ($alloc, $C);
                       $C->parentNode->insertBefore (&t ("\n"), $C);
                     }
                   else
