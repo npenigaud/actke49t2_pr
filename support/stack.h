@@ -17,10 +17,7 @@ USE ISO_C_BINDING, ONLY : C_LOC, C_F_POINTER
 
 #define nullptr(p) IP_##p##_ = 0
 
-#define alloc4i(n, sh, sz) n sh => YSTACK%IDATA4 (:,YLSTACK%L4+1:YLSTACK%L4+sz); YLSTACK%L4=YLSTACK%L4+(SIZE(n,KIND=8)/SIZE(YSTACK%IDATA4,1));IF(YLSTACK%L4>YLSTACK%U4)CALL ABOR1_ACC(__FILE__)
-#define alloc4l(n, sh, sz) n sh => YSTACK%LDATA4 (:,YLSTACK%L4+1:YLSTACK%L4+sz); YLSTACK%L4=YLSTACK%L4+(SIZE(n,KIND=8)/SIZE(YSTACK%LDATA4,1));IF(YLSTACK%L4>YLSTACK%U4)CALL ABOR1_ACC(__FILE__)
-#define alloc8r(n, sh, sz) n sh => YSTACK%ZDATA8 (:,YLSTACK%L8+1:YLSTACK%L8+sz); YLSTACK%L8=YLSTACK%L8+(SIZE(n,KIND=8)/SIZE(YSTACK%ZDATA8,1));IF(YLSTACK%L8>YLSTACK%U8)CALL ABOR1_ACC(__FILE__)
-
+#define alloc(n, lb, ub) CALL STACK_ALLOC (n, lb, ub, YLSTACK)
 
 #define stack_l4(ydstack,ibl,nbl) ((INT (ibl, 8) - 1) * SIZE (ydstack%IDATA4, 2)) / INT (nbl, 8)
 #define stack_u4(ydstack,ibl,nbl) ((INT (ibl, 8)    ) * SIZE (ydstack%IDATA4, 2)) / INT (nbl, 8)

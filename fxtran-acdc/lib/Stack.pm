@@ -181,24 +181,12 @@ sub addStack
                       my $SZ = join ('*', map { $sz[$_] =~ m/^\w+$/o ? $sz[$_] : "($sz[$_])" } (0 .. $nd-1));
                       my $SH = join (',', map { "$lb[$_]:$ub[$_]" } (0 .. $nd-1));
 
+                      my $LB = join (',', @lb);
+                      my $UB = join (',', @ub);
+
                       my $alloc;
 
-                      if ($t =~ m/^REAL/o)
-                        {
-                          $alloc = &s ("alloc8r ($n, ($SH), $SZ)");
-                        } 
-                      elsif ($t =~ m/^LOGICAL/o)
-                        {
-                          $alloc = &s ("alloc4l ($n, ($SH), $SZ)");
-                        } 
-                      elsif ($t =~ m/^INTEGER/o)
-                        {
-                          $alloc = &s ("alloc4i ($n, ($SH), $SZ)");
-                        } 
-                      else
-                        {
-                          die ("Unexpected type $t");
-                        }
+                      $alloc = &s ("alloc ($n, (/$LB/), (/$UB/))");
 
                       $C->parentNode->insertBefore ($alloc, $C);
                       $C->parentNode->insertBefore (&t ("\n"), $C);
