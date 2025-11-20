@@ -178,18 +178,22 @@ sub addStack
                 {
                   if ($opts{stack84})
                     {
-                      my $SZ = join ('*', map { "($sz[$_])" } (0 .. $nd-1));
+                      my $SZ = join ('*', map { $sz[$_] =~ m/^\w+$/o ? $sz[$_] : "($sz[$_])" } (0 .. $nd-1));
                       my $SH = join (',', map { "$lb[$_]:$ub[$_]" } (0 .. $nd-1));
 
                       my $alloc;
 
                       if ($t =~ m/^REAL/o)
                         {
-                          $alloc = &s ("alloc8 ($n, ($SH), $SZ)");
+                          $alloc = &s ("alloc8r ($n, ($SH), $SZ)");
+                        } 
+                      elsif ($t =~ m/^LOGICAL/o)
+                        {
+                          $alloc = &s ("alloc4l ($n, ($SH), $SZ)");
                         } 
                       elsif ($t =~ m/^INTEGER/o)
                         {
-                          $alloc = &s ("alloc4 ($n, ($SH), $SZ)");
+                          $alloc = &s ("alloc4i ($n, ($SH), $SZ)");
                         } 
                       else
                         {
